@@ -19,7 +19,7 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
     Pelicula pelicula; // Película actual
     int n; // Tipo de algoritmo; -1 algoritmo general o n mayor que 0, n-dados
 
-    public ItemAverageAdjustment(int n, List<Valoracion> valoraciones, float similitud, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida) {
+    public ItemAverageAdjustment(int n, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida) {
 
         this.usuario = usuario;
         this.pelicula = pelicula;

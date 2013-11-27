@@ -17,30 +17,17 @@ import java.util.List;
  */
 public class WeitgthedSum implements AlgoritmoRecomendacion {
     
-    List<Valoracion> usuarioPeliculas; // Lista de todas las valoraciones que un usuario que ha hecho a las peliculas
-    List<Valoracion> peliculaUsuarios; // Lista de valoraciones que se han hecho sobre una película
     MedidaSimilitud medida; // Objeto medida de similitud (Coseno o Pearson)
     Usuario usuario; // Usuario actual
     Pelicula pelicula; // Película actual
     boolean ws; // Tipo de algoritmo; true WS, false WA
 
-    public WeitgthedSum(boolean ws, List<Valoracion> valoraciones, float similitud, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida) {
+    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida) {
         this.ws = ws;
         this.usuario = usuario;
         this.pelicula = pelicula;
-        this.peliculaUsuarios = new LinkedList<>();
-        this.usuarioPeliculas = new LinkedList<>();
         this.medida = medida;
-        
-        for(Valoracion v:valoraciones){
-            if(v.getUsuario()==this.usuario){
-                this.usuarioPeliculas.add(v);
-            }
-            if(v.getPelicula()==this.pelicula){
-                this.peliculaUsuarios.add(v);
-            }
-        }
-        
+               
     }
     
     @Override
@@ -48,11 +35,11 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
         
         float media = 0;
         
-        for(Valoracion v:usuarioPeliculas){
+        for(Valoracion v:usuario.getValoraciones()){
             media += v.getPuntuacion();
         }  
         
-        return media/usuarioPeliculas.size();
+        return media/usuario.getValoraciones().size();
         
     }
     
@@ -65,33 +52,25 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
 
     @Override
     public float prediccion() {
-        float num = 0, dem = 0;
+        float num = 0, den = 0;
         
         /* Sumatoria de la similitud de todos los usuarios que han votado la Pelicula
            con el Usuario. Denominador común de ambos algoritmos*/
-        for (Valoracion v:peliculaUsuarios){
-            dem += medida.similitud(usuario, v.getUsuario());
-        }
-        
-        if(ws){ // Algorimto WS
-            /* Numerador del algoritmo WS */
-            for (Valoracion v:peliculaUsuarios){
+        if (ws){
+            for (Valoracion v:pelicula.getValoraciones()){
+                den += medida.similitud(usuario, v.getUsuario());
                 num += v.getPuntuacion() * medida.similitud(usuario, v.getUsuario());
             }
-
-            return num/dem;
+            
+            return num/den;
+        }else{
+            float media = mediaUsuario();
+            for (Valoracion v:pelicula.getValoraciones()){
+                den += medida.similitud(usuario, v.getUsuario());
+                num += (v.getPuntuacion() - mediaUsuario()) * medida.similitud(usuario, v.getUsuario());
+            } 
+            return media + num/den;
         }
-        
-        //Algoritmo WA
-        
-        float media = mediaUsuario();
-        
-        /* Numerador del algoritmo WA */
-        for (Valoracion v:peliculaUsuarios){
-            num += (v.getPuntuacion() - mediaUsuario()) * medida.similitud(usuario, v.getUsuario());
-        }
-        
-        return media + num/dem;
     }
     
 }
