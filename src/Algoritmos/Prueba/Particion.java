@@ -13,8 +13,8 @@ import java.util.List;
 public class Particion {
  
     List<Usuario> contenido;
-    enum tipo{Test,Entrenamiento};
-    tipo tipoParticion;    
+    public enum tipo{Test,Entrenamiento};
+    public tipo tipoParticion;    
     
     public Particion() {
         contenido = new LinkedList<>();
@@ -23,5 +23,8 @@ public class Particion {
     public void addContenido( Usuario aContenido ){
         contenido.add(aContenido);
     }
-    
+
+    public tipo getTipoParticion() {
+        return tipoParticion;
+    }    
 }
