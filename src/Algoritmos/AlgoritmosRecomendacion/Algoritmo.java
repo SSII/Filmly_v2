@@ -103,6 +103,8 @@ public class Algoritmo {
     /**
      * @param args the command line arguments
      */
+    
+    /*
     public static void main(String[] args) {
         // TODO code application logic here
         
@@ -110,5 +112,5 @@ public class Algoritmo {
         
        // a.cargarDatos();
    
-    }
+    }*/
 }

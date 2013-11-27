@@ -6,7 +6,6 @@ package Algoritmos.AlgoritmosRecomendacion;
 
 import Algoritmos.MedidasSimilitud.MedidaSimilitud;
 import Algoritmos.Modelo.*;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,8 +14,6 @@ import java.util.List;
  */
 public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
     
-    List<Valoracion> usuarioPeliculas; // Lista de todas las valoraciones que un usuario que ha hecho a las peliculas
-    List<Valoracion> peliculaUsuarios; // Lista de valoraciones que se han hecho sobre una película
     MedidaSimilitud medida; // Objeto medida de similitud (Coseno o Pearson)
     Usuario usuario; // Usuario actual
     Pelicula pelicula; // Película actual
@@ -26,22 +23,12 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
 
         this.usuario = usuario;
         this.pelicula = pelicula;
-        this.peliculaUsuarios = new LinkedList<>();
-        this.usuarioPeliculas = new LinkedList<>();
         this.medida = medida;
         
-        for(Valoracion v:valoraciones){
-            if(v.getUsuario()==this.usuario){
-                this.usuarioPeliculas.add(v);
-            }
-            if(v.getPelicula()==this.pelicula){
-                this.peliculaUsuarios.add(v);
-            }
-        }
         if (n == -1){
             this.n = n;
         }else{
-            this.n = this.usuarioPeliculas.size();
+            this.n = this.usuario.getValoraciones().size();
         }        
         
     }
@@ -51,8 +38,8 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
         
         float media = 0;
         
-        for(int i=0; i<n; ++i){
-            media += usuarioPeliculas.get(i).getPuntuacion();
+        for(Valoracion v:usuario.getValoraciones()){
+            media += v.getPuntuacion();
         }  
         
         return media/n;
@@ -64,25 +51,11 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
         
         float media = 0;
         
-        for(Valoracion v:peliculaUsuarios){
+        for(Valoracion v:pelicula.getValoraciones()){
             media += v.getPuntuacion();
         }  
         
-        return media/peliculaUsuarios.size();
-        
-    }
-    
-    private float correlacion(Usuario u){
-        
-        float media = mediaUsuario();
-        int acum = 0;
-        
-        for(int i=0; i<n; ++i){
-            acum += (medida.similitud(pelicula, usuarioPeliculas.get(i).getPelicula()))*
-                    (usuarioPeliculas.get(i).getPuntuacion() - media);
-       }
-        
-        return acum;
+        return media/pelicula.getValoraciones().size();
         
     }
     
@@ -90,14 +63,15 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
 
     @Override
     public float prediccion() {
-        
-       float acum = 0;
+       float den = 0, num = 0, media = mediaUsuario();
        
-       for(int i=0; i<n; ++i){ 
-           acum += Math.abs(medida.similitud(pelicula, usuarioPeliculas.get(i).getPelicula()));
+       for(int i=0; i<n; ++i){
+           num += (medida.similitud(pelicula, usuario.getValoraciones().get(i).getPelicula()))*
+                    (usuario.getValoraciones().get(i).getPuntuacion() - media);
+           den += Math.abs(medida.similitud(pelicula, usuario.getValoraciones().get(i).getPelicula()));
        }
            
-       return correlacion(usuario)/acum + mediaPelicula();
+       return num/den + mediaPelicula();
         
     }
 }

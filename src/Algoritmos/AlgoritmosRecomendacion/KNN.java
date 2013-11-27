@@ -78,10 +78,4 @@ public class KNN {
         return (List<Usuario>)_vecinos.keySet();
     }
     
-    
-    
-    
-    
-
-    
 }
