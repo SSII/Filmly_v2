@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Particion {
  
-    List<Usuario> contenido;
+    private List<Usuario> contenido;
     public enum tipo{Test,Entrenamiento};
     public tipo tipoParticion;    
     
@@ -32,4 +32,9 @@ public class Particion {
     public void setTipoParticion(tipo tipoParticion) {
         this.tipoParticion = tipoParticion;
     }
+
+    public List<Usuario> getContenido() {
+        return contenido;
+    }
+    
 }

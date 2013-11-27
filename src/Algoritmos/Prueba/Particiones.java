@@ -54,4 +54,29 @@ public class Particiones {
         }
     }
     
+    
+    
+    public Particion getParticionTest(){
+        
+        for(int i=0; i<particiones.size(); i++){
+            if( particiones.get(i).getTipoParticion() == Particion.tipo.Test ){
+                return particiones.get(i);
+            }
+        }
+        
+        return null;
+    }
+    
+    public List<Usuario> getUsuariosEntrenamiento(){
+        List<Usuario> entrenamiento = new LinkedList<>();
+        
+        for(int i=0; i<nParticiones; i++){
+            if( particiones.get(i).getTipoParticion() == Particion.tipo.Entrenamiento ){
+                entrenamiento.addAll(particiones.get(i).getContenido());
+            }
+        }
+        
+        return entrenamiento;
+    }
+    
 }
