@@ -45,7 +45,6 @@ public class Algoritmo {
         
         Particion p = new Particion(7);
 
-        System.out.println("OLA K ASE");
         
         Query buscaValoraciones = em.createNativeQuery("select * from valoraciones v where v.idUser = 265 ", Valoracion.class);
 
