@@ -12,39 +12,24 @@ import java.util.List;
  */
 public class Particion {
  
-    List< List<Usuario> > particiones;
-    int nParticion;
+    List<Usuario> contenido;
+    public enum tipo{Test,Entrenamiento};
+    public tipo tipoParticion;    
+    
+    public Particion() {
+        contenido = new LinkedList<>();
+        tipoParticion = tipo.Entrenamiento;
+    }
+    
+    public void addContenido( Usuario aContenido ){
+        contenido.add(aContenido);
+    }
 
-    public Particion(int anParticion) {
-        nParticion = anParticion;
-        particiones = new LinkedList<>();
-       
+    public tipo getTipoParticion() {
+        return tipoParticion;
+    }    
+
+    public void setTipoParticion(tipo tipoParticion) {
+        this.tipoParticion = tipoParticion;
     }
-    
-    /*
-    *   List<Usuario>: Lista de usuarios sobre los que se realizará la partición.
-    *   nParticion: Número de particiones deseadas.
-    */
-    public void crearParticiones(List<Usuario> usuarios){
-        int tamParticion = usuarios.size()/nParticion;
-        int k = 0;
-       
-        for( int i=0; i<nParticion; i++){
-            particiones.add( new LinkedList<Usuario>() );
-            for( int j=0; j<tamParticion; j++){
-                particiones.get(i).add( usuarios.get(k) );
-                k++;                       
-            }            
-        }
-    }
-    
-    /*
-    * n: Número de la partición que se desea obtener.
-    */
-    public List<Usuario> getParticion(int n){
-        return particiones.get(n);
-    }
-    
-    
-    
 }
