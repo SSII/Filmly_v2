@@ -29,7 +29,7 @@ public class Pelicula implements Serializable {
     @Id
     @Column(name="id")
     private int _id;
-    @OneToMany(targetEntity=Valoracion.class, cascade=CascadeType.ALL, mappedBy="_puntuacion")
+    @OneToMany(targetEntity=Valoracion.class, cascade=CascadeType.ALL, mappedBy="_pelicula")
     private List<Valoracion> _valoraciones;
 
     public Pelicula() {
@@ -76,6 +76,11 @@ public class Pelicula implements Serializable {
         
         _valoraciones = valoraciones;
         
+    }
+    
+    public void addValoracion(Valoracion v){
+        
+        _valoraciones.add(v);
     }
     
     

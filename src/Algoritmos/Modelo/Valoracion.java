@@ -44,17 +44,13 @@ public class Valoracion implements Serializable {
     public Valoracion() {
     }
 
-    public Valoracion(int puntuacion, String comentario, Usuario usuario, Pelicula pelicula) {
+    public Valoracion(int puntuacion, String comentario) {
         this._puntuacion = puntuacion;
         this._comentario = comentario;
-        this._usuario = usuario;
-        this._pelicula = pelicula;
     }
 
-    public Valoracion(int puntuacion,Usuario usuario, Pelicula pelicula) {
+    public Valoracion(int puntuacion) {
         this._puntuacion = puntuacion;
-        this._usuario = usuario;
-        this._pelicula = pelicula;
     }
 
     public int getPuntuacion() {
@@ -73,6 +69,14 @@ public class Valoracion implements Serializable {
         return _pelicula;
     }
     
-    
+    public void setUsuario(Usuario _usuario) {
+        this._usuario = _usuario;
+        _usuario.addValoracion(this);
+    }
+
+    public void setPelicula(Pelicula _pelicula) {
+        this._pelicula = _pelicula;
+        _pelicula.addValoracion(this);
+    }
     
 }

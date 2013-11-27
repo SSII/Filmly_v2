@@ -110,5 +110,9 @@ public class Usuario implements Serializable {
         return null;
     }
     
+    public void addValoracion(Valoracion v){
+        
+        _valoraciones.add(v);
+    }
     
 }
