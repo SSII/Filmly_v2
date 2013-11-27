@@ -100,5 +100,16 @@ public class Usuario implements Serializable {
         
     }
     
+    public Valoracion getValoracion(Pelicula p){
+        
+        for(Valoracion v:_valoraciones){
+            if (v.getPelicula().equals(p)){
+                return v;
+            }
+        }
+        
+        return null;
+    }
+    
     
 }
