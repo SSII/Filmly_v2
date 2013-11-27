@@ -10,9 +10,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -21,7 +24,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="usuarios")
 public class Usuario implements Serializable {
-    
+    @Id
+    @Column(name="id")
+    private String _id;
     @Column(name="nombre")
     String _nombre;
     @Column(name="nick")
@@ -30,10 +35,7 @@ public class Usuario implements Serializable {
     String _pass;
     @Column(name="email")
     String _email;
-    @Id
-    @Column(name="id")
-    String _id;
-    @OneToMany(targetEntity=Valoracion.class, cascade=CascadeType.ALL, mappedBy="_puntuacion")
+    @OneToMany(mappedBy="_usuario")
     private List<Valoracion> _valoraciones;
 
     public Usuario() {
@@ -89,9 +91,6 @@ public class Usuario implements Serializable {
     }
     
     public void setValoraciones(List<Valoracion> valoraciones) {
-        
-        _valoraciones = valoraciones;
-        
     }
     
     public List<Valoracion> getValoraciones() {

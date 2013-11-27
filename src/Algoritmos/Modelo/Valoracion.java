@@ -8,10 +8,12 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
@@ -19,23 +21,25 @@ import javax.persistence.ManyToOne;
  */
 
 @Entity
+@Table(name="valoraciones")
 public class Valoracion implements Serializable {
     @Id
     @GeneratedValue
     Long _id;
     
     @Column(name="rate")
-    int _puntuacion;
+    private int _puntuacion;
     
     @Column(name="comentario")
     String _comentario;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="idUser", referencedColumnName = "id")
-    Usuario _usuario;
+    private Usuario _usuario;
+    
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="idPelicula", referencedColumnName = "id")
-    Pelicula _pelicula;
+    private Pelicula _pelicula;
 
     public Valoracion() {
     }

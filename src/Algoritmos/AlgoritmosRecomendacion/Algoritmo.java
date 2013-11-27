@@ -25,6 +25,7 @@ public class Algoritmo {
     public List<Pelicula> items; /*Lista de peliculas*/
     public List<Usuario> usuarios; /*Lista de usuarios*/
     private List<Valoracion> valoraciones;
+    private Usuario user_activo;
     
     public Algoritmo(){
         GestorPersistencia.crearConexion();
@@ -36,28 +37,30 @@ public class Algoritmo {
         valoraciones = new LinkedList();
 //        
 //      Query q = em.createNativeQuery("select *  from peliculas", Pelicula.class);
-        Query q2 = em.createNativeQuery("select * from usuarios", Usuario.class);
+//        Query q2 = em.createNativeQuery("select * from usuarios where id=265", Usuario.class);
 //      Query q3 = em.createNativeQuery("select * from valoraciones", Valoracion.class);
 //        
 //        
-//      items = q.getResultList();      
-        usuarios = q2.getResultList();
+//      items = q.getResultList();   
         
-        Particion p = new Particion(7);
-
+                
+ //       usuarios = q2.getResultList();
         
-        Query buscaValoraciones = em.createNativeQuery("select * from valoraciones v where v.idUser = 265 ", Valoracion.class);
-
-        p.crearParticiones(usuarios);
-
-        List<Usuario> part;
-        for(int i=0; i<7; i++){
-            part = p.getParticion(i);
-            System.out.println("NUEVA PARTICION: " + i);
-            for(int j = 0; j< part.size(); j++){
-                System.out.println("ID: " + part.get(j).getId());
-            }
-        }
+//        Particion p = new Particion(7);
+//
+//        
+//        Query buscaValoraciones = em.createNativeQuery("select * from valoraciones v where v.idUser = 265 ", Valoracion.class);
+//
+//        p.crearParticiones(usuarios);
+//
+//        List<Usuario> part;
+//        for(int i=0; i<7; i++){
+//            part = p.getParticion(i);
+//            System.out.println("NUEVA PARTICION: " + i);
+//            for(int j = 0; j< part.size(); j++){
+//                System.out.println("ID: " + part.get(j).getId());
+//            }
+//        }
 //        valoraciones = q3.getResultList();
 //        
 //        
@@ -71,10 +74,13 @@ public class Algoritmo {
 //        System.out.println("Tamaño peliculas: " + items.size());
 //        System.out.println("Tamaño usuarios: " + usuarios.size());
 //        System.out.println("Tamaño valoraciones: " + valoraciones.size());
-        usuarios.get(1).setValoraciones(buscaValoraciones.getResultList());
+     //   usuarios.get(1).setValoraciones(buscaValoraciones.getResultList());
         
-        System.out.println("TAMAÑO: " + usuarios.get(1).getValoraciones().size());
-        
+           user_activo = em.find(Usuario.class, "265");    
+
+           System.out.println("USUARIO: " + user_activo.getId());
+           System.out.println("TAMAÑO: " + user_activo.getValoraciones().get(0).getPuntuacion());
+
 //        
 //            
 //        Query buscaValoraciones = em.createNativeQuery("select * from valoraciones v where v.idUser = 265 ", Valoracion.class);
@@ -87,9 +93,9 @@ public class Algoritmo {
             
          
         
-        System.out.println("Tamaño peliculas: " + items.size());
-        System.out.println("Tamaño usuarios: " + usuarios.size());
-        System.out.println("Tamaño valoraciones: " + valoraciones.size());
+//        System.out.println("Tamaño peliculas: " + items.size());
+//        System.out.println("Tamaño usuarios: " + usuarios.size());
+//        System.out.println("Tamaño valoraciones: " + valoraciones.size());
     }
     
     
