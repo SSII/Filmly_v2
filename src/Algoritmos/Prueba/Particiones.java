@@ -37,8 +37,21 @@ public class Particiones {
                 k++;                       
             }            
         }
+        
+        particiones.get(0).setTipoParticion(Particion.tipo.Test);
     }
     
-    
+    public void cambiarParticionTest(){
+        for(int i=0;i<particiones.size();i++){
+            
+            if( particiones.get(i).getTipoParticion() == Particion.tipo.Test){
+                particiones.get(i).setTipoParticion(Particion.tipo.Entrenamiento);
+                particiones.get( (i+1)%particiones.size() ).setTipoParticion(Particion.tipo.Test);
+                
+                break;
+            }
+            
+        }
+    }
     
 }

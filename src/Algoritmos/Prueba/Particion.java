@@ -18,6 +18,7 @@ public class Particion {
     
     public Particion() {
         contenido = new LinkedList<>();
+        tipoParticion = tipo.Entrenamiento;
     }
     
     public void addContenido( Usuario aContenido ){
@@ -27,4 +28,8 @@ public class Particion {
     public tipo getTipoParticion() {
         return tipoParticion;
     }    
+
+    public void setTipoParticion(tipo tipoParticion) {
+        this.tipoParticion = tipoParticion;
+    }
 }
