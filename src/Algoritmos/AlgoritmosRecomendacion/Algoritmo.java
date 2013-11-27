@@ -60,67 +60,6 @@ public class Algoritmo {
         System.out.println("Tamaño valoraciones: " + valoraciones.size());
     }
     
-    /*public void cargarDatos(){
-        BufferedReader br = null;
-        
-        try{ 
-            
-            URL url = this.getClass().getClassLoader().getResource("algoritmos/pruebas/prueba1.txt");
-            br = new BufferedReader(new InputStreamReader(url.openStream()));
-            String linea;
-            
-            while ((linea = br.readLine()) != null) {
-                
-                Map mapaU = new HashMap();
-                String[] partes = linea.split("/");
-                
-                for (int i = 0; i < partes.length; i = i + 2) {
-                    
-                    if (partes[i].equals("nota")) {
-                        
-                        mapaU.put(partes[i], Integer.parseInt(partes[i+1]));
-                                          
-                    }else{
-           
-                        mapaU.put(partes[i],partes[i+1]);
-            
-                    }
-                    
-                    if(partes[i].equals("pelicula")){
-                    
-                        if(!items.contains(partes[i+1])){
-                            items.add(partes[i+1]);
-                        }
-                    }else{
-                        
-                        if(partes[i].equals("nombre")){
-                            
-                            if(!usuarios.contains(partes[i+1])){
-                                usuarios.add(partes[i+1]);
-                            }   
-                        }
-                    }
-                }
-                
-                puntuacionUsuarioPelicula.add(mapaU);
-                
-            }
-            
-        
-         } catch (IOException ex) {
-
-            Logger.getLogger(Algoritmo.class.getName()).log(Level.SEVERE, null, ex);
-        
-        }
-        
-         try {
-
-               br.close();
-
-         } catch (IOException ex) {
-               Logger.getLogger(Algoritmo.class.getName()).log(Level.SEVERE, null, ex);
-         }
-    }*/
     
     
     /**
