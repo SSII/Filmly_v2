@@ -30,7 +30,10 @@ public class MAE {
    
     public float precision(){
         List<Usuario> vecinos = new LinkedList<>();
-        List<Pelicula> peliculas = new LinkedList<>();
+        List<Pelicula> peliculasTest = new LinkedList<>();
+        List<Pelicula> peliculasVecino = new LinkedList<>();
+        List<Pelicula> peliculasComunes = new LinkedList<>();
+
 
         //I veces validación cruzada
         for(int i=0; i<particiones.nParticiones; i++){
@@ -40,10 +43,23 @@ public class MAE {
             
             
             //Recorrido de la particion test
-            for(int j=0; j<pTest.getContenido().size();j++){                
+            for(int j=0; j<pTest.getContenido().size();j++){    
+                Usuario actualTest = pTest.getContenido().get(j);
                 
-                knn.setEjemplo( pTest.getContenido().get(j) );
-                vecinos = knn.evaluar();    
+                knn.setEjemplo( actualTest );
+                vecinos = knn.evaluar(); 
+                peliculasTest = actualTest.getPeliculasValoradas();
+             
+                //Recorriddo de vecindario
+                for(int k=0; k<vecinos.size(); k++){
+                    
+                    peliculasVecino = vecinos.get(k).getPeliculasValoradas();
+                    peliculasComunes = getPeliculasComunes(peliculasTest, peliculasVecino);
+                    
+                    
+                }
+                
+                
                 
                 
                 vecinos.clear();
@@ -56,5 +72,19 @@ public class MAE {
         }
         return 0;
     
+    }
+    
+    private List<Pelicula> getPeliculasComunes(List<Pelicula> peliculasTest,List<Pelicula> peliculasVecino){
+        List<Pelicula> resultado = new LinkedList<>();
+        
+        for (Pelicula i : peliculasTest) {
+            if( peliculasVecino.contains(i) ){
+                resultado.add(i);
+            }
+        }
+        
+        return resultado;
+        
+        
     }
 }
