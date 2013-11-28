@@ -21,7 +21,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     Usuario usuario; // Usuario actual
     Pelicula pelicula; // Película actual
     boolean ws; // Tipo de algoritmo; true WS, false WA
-    List<Valoracion> valoracionesVecinos; // Lista de usuario comunes;
+    List<Valoracion> valoracionesVecinos; // Lista de valoraciones comunes;
 
     public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida, List<Usuario> vecinos) {
         this.ws = ws;

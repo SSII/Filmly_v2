@@ -10,7 +10,6 @@ import Algoritmos.Modelo.*;
  */
 public interface MedidaSimilitud {
     
-    public abstract float similitud(Pelicula p1, Pelicula p2);
-    
-    public abstract float similitud(Usuario u1, Usuario u2);
+       
+    public abstract float similitud();
 }
