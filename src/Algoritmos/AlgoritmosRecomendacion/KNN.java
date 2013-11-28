@@ -6,6 +6,7 @@
 
 package Algoritmos.AlgoritmosRecomendacion;
 
+import Algoritmos.MedidasSimilitud.*;
 import Algoritmos.MedidasSimilitud.MedidaSimilitud;
 import Algoritmos.Modelo.Usuario;
 import java.util.HashMap;
@@ -23,12 +24,13 @@ public class KNN {
     Usuario _ejemplo;
     int _k;
     MedidaSimilitud _algoritmoSimilitud;
+    int _indiceAlgoritmo;
 
-    public KNN(List<Usuario> _entrenamiento, Usuario _ejemplo, int _k, MedidaSimilitud _algoritmoSimilitud) {
+    public KNN(List<Usuario> _entrenamiento, Usuario _ejemplo, int _k, int _indiceAlgoritmo) {
         this._entrenamiento = _entrenamiento;
         this._ejemplo = _ejemplo;
         this._k = _k;
-        this._algoritmoSimilitud = _algoritmoSimilitud;
+        this._indiceAlgoritmo = _indiceAlgoritmo;
         this._vecinos = new HashMap<>();
     }
     
@@ -63,7 +65,12 @@ public class KNN {
     public List<Usuario> evaluar(){
         
         for(Usuario u:_entrenamiento){
-            float similitud = _algoritmoSimilitud.similitud(u, _ejemplo);
+            if (_indiceAlgoritmo == 0){
+                _algoritmoSimilitud = new Coseno (u, _ejemplo);
+            }else{
+                _algoritmoSimilitud = new Pearson (u, _ejemplo);
+            }
+            float similitud = _algoritmoSimilitud.similitud();
             if (_vecinos.size() < _k){
                 _vecinos.put(u, similitud);
             }else{

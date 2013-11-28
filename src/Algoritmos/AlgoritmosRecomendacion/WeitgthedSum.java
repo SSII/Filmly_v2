@@ -4,6 +4,7 @@
  */
 package Algoritmos.AlgoritmosRecomendacion;
 
+import Algoritmos.MedidasSimilitud.*;
 import Algoritmos.MedidasSimilitud.MedidaSimilitud;
 import Algoritmos.Modelo.Pelicula;
 import Algoritmos.Modelo.Usuario;
@@ -17,17 +18,19 @@ import java.util.List;
  */
 public class WeitgthedSum implements AlgoritmoRecomendacion {
     
-    MedidaSimilitud medida; // Objeto medida de similitud (Coseno o Pearson)
+    int algoritmo;
+    MedidaSimilitud medida; // medida de similitud (Coseno = 0 o Pearson = 1)
     Usuario usuario; // Usuario actual
     Pelicula pelicula; // Película actual
     boolean ws; // Tipo de algoritmo; true WS, false WA
     List<Valoracion> valoracionesVecinos; // Lista de valoraciones comunes;
+    
 
-    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida, List<Usuario> vecinos) {
+    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos) {
         this.ws = ws;
         this.usuario = usuario;
         this.pelicula = pelicula;
-        this.medida = medida;
+        this.algoritmo = algoritmo;
         this.valoracionesVecinos = new LinkedList();
         
         for (Valoracion v:pelicula.getValoraciones()){
@@ -69,16 +72,26 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
            con el Usuario. Denominador común de ambos algoritmos*/
         if (ws){
             for (Valoracion v:valoracionesVecinos){
-                den += medida.similitud(usuario, v.getUsuario());
-                num += v.getPuntuacion() * medida.similitud(usuario, v.getUsuario());
+                if (algoritmo == 0){
+                    medida = new Coseno(usuario, v.getUsuario());
+                }else{
+                    medida = new Pearson(usuario, v.getUsuario());
+                }
+                den += medida.similitud();
+                num += v.getPuntuacion() * medida.similitud();
             }
             
             return num/den;
         }else{
             float media = mediaUsuario();
             for (Valoracion v:valoracionesVecinos){
-                den += medida.similitud(usuario, v.getUsuario());
-                num += (v.getPuntuacion() - mediaUsuario()) * medida.similitud(usuario, v.getUsuario());
+                if (algoritmo == 0){
+                    medida = new Coseno(usuario, v.getUsuario());
+                }else{
+                    medida = new Pearson(usuario, v.getUsuario());
+                }
+                den += medida.similitud();
+                num += (v.getPuntuacion() - mediaUsuario()) * medida.similitud();
             } 
             return media + num/den;
         }

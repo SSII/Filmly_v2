@@ -74,11 +74,11 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
     public float prediccion() {
        float den = 0, num = 0, media = mediaUsuario();
        
-       for(int i=0; i<n; ++i){
+       /*for(int i=0; i<n; ++i){
            num += (medida.similitud(pelicula, usuario.getValoraciones().get(i).getPelicula()))*
                     (usuario.getValoraciones().get(i).getPuntuacion() - media);
            den += Math.abs(medida.similitud(pelicula, usuario.getValoraciones().get(i).getPelicula()));
-       }
+       }*/
            
        return num/den + mediaPelicula();
         

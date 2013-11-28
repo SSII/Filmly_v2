@@ -6,7 +6,9 @@
 
 package Algoritmos.Prueba;
 
+import Algoritmos.AlgoritmosRecomendacion.AlgoritmoRecomendacion;
 import Algoritmos.AlgoritmosRecomendacion.ItemAverageAdjustment;
+import Algoritmos.AlgoritmosRecomendacion.WeitgthedSum;
 import Algoritmos.MedidasSimilitud.Coseno;
 import Algoritmos.MedidasSimilitud.Pearson;
 import Algoritmos.Modelo.Pelicula;
@@ -76,9 +78,9 @@ public class MainPruebas {
         vecinos.add(u0);
         vecinos.add(u1);
         
-        ItemAverageAdjustment a = new ItemAverageAdjustment(-1, u2, p3, new Coseno(), null);
+        //AlgoritmoRecomendacion a = new WeitgthedSum(true, u2, p3, 0, vecinos);
         Coseno p = new Coseno(u0,u1);
-        System.out.println(p.similitud(new Usuario(), new Usuario() ));
+        System.out.println(p.similitud());
 
     // a.cargarDatos();
 
