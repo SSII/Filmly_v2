@@ -65,7 +65,7 @@ public class MainPruebas {
         Valoracion v5 = new Valoracion (2);
         v5.setUsuario(u0);
         v5.setPelicula(p3);
-        Valoracion v6 = new Valoracion (2);
+        Valoracion v6 = new Valoracion (1);
         v6.setUsuario(u1);
         v6.setPelicula(p3);
         Valoracion v7 = new Valoracion (4);
@@ -78,9 +78,8 @@ public class MainPruebas {
         vecinos.add(u0);
         vecinos.add(u1);
         
-        //AlgoritmoRecomendacion a = new WeitgthedSum(true, u2, p3, 0, vecinos);
-        Coseno p = new Coseno(u0,u1);
-        System.out.println(p.similitud());
+        AlgoritmoRecomendacion a = new WeitgthedSum(true, u2, p3, 0, vecinos);
+        System.out.println(a.prediccion());
 
     // a.cargarDatos();
 
