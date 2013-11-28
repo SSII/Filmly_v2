@@ -43,7 +43,7 @@ public class MainPruebas {
         
         Usuario u0 = new Usuario ("","","","","0");
         Usuario u1 = new Usuario ("","","","","1");
-/*        Pelicula p1 = new Pelicula ("", 0, 1, new LinkedList());
+        Pelicula p1 = new Pelicula ("", 0, 1, new LinkedList());
         Pelicula p2 = new Pelicula ("", 0, 2, new LinkedList());
         Pelicula p3 = new Pelicula ("", 0, 3, new LinkedList());
         Valoracion v1 = new Valoracion (2);
@@ -63,7 +63,7 @@ public class MainPruebas {
         v5.setPelicula(p3);
         Valoracion v6 = new Valoracion (3);
         v6.setUsuario(u1);
-        v6.setPelicula(p3);*/
+        v6.setPelicula(p3);
         
         
         

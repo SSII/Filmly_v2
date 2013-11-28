@@ -21,12 +21,23 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     Usuario usuario; // Usuario actual
     Pelicula pelicula; // Película actual
     boolean ws; // Tipo de algoritmo; true WS, false WA
+    List<Valoracion> valoracionesVecinos; // Lista de usuario comunes;
 
-    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida) {
+    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida, List<Usuario> vecinos) {
         this.ws = ws;
         this.usuario = usuario;
         this.pelicula = pelicula;
         this.medida = medida;
+        this.valoracionesVecinos = new LinkedList();
+        
+        for (Valoracion v:pelicula.getValoraciones()){
+            for (Usuario u:vecinos){
+                Valoracion vUsuario = u.getValoracion(pelicula);
+                if (vUsuario != null){
+                    valoracionesVecinos.add(v);
+                }   
+            }
+        }
                
     }
     
@@ -57,7 +68,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
         /* Sumatoria de la similitud de todos los usuarios que han votado la Pelicula
            con el Usuario. Denominador común de ambos algoritmos*/
         if (ws){
-            for (Valoracion v:pelicula.getValoraciones()){
+            for (Valoracion v:valoracionesVecinos){
                 den += medida.similitud(usuario, v.getUsuario());
                 num += v.getPuntuacion() * medida.similitud(usuario, v.getUsuario());
             }
@@ -65,7 +76,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
             return num/den;
         }else{
             float media = mediaUsuario();
-            for (Valoracion v:pelicula.getValoraciones()){
+            for (Valoracion v:valoracionesVecinos){
                 den += medida.similitud(usuario, v.getUsuario());
                 num += (v.getPuntuacion() - mediaUsuario()) * medida.similitud(usuario, v.getUsuario());
             } 

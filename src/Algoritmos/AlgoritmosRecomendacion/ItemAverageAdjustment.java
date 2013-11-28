@@ -17,13 +17,15 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
     MedidaSimilitud medida; // Objeto medida de similitud (Coseno o Pearson)
     Usuario usuario; // Usuario actual
     Pelicula pelicula; // Película actual
+    List<Usuario> vecinos;
     int n; // Tipo de algoritmo; -1 algoritmo general o n mayor que 0, n-dados
 
-    public ItemAverageAdjustment(int n, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida) {
+    public ItemAverageAdjustment(int n, Usuario usuario, Pelicula pelicula, MedidaSimilitud medida, List<Usuario> vecinos) {
 
         this.usuario = usuario;
         this.pelicula = pelicula;
         this.medida = medida;
+        this.vecinos = vecinos;
         
         if (n == -1){
             this.n = n;
@@ -48,14 +50,21 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
     
     @Override
     public float mediaPelicula(){
-        
+        int cont = 0;
         float media = 0;
         
         for(Valoracion v:pelicula.getValoraciones()){
-            media += v.getPuntuacion();
+            for (Usuario u:vecinos){
+                Valoracion vUsuario = u.getValoracion(pelicula);
+                if (vUsuario != null){
+                    media += vUsuario.getPuntuacion();
+                    cont++;
+                }
+                
+            }
         }  
         
-        return media/pelicula.getValoraciones().size();
+        return media/cont;
         
     }
     
