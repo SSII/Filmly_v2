@@ -115,4 +115,14 @@ public class Usuario implements Serializable {
         _valoraciones.add(v);
     }
     
+    public List<Integer> getPeliculasValoradas(){
+        List<Integer> IDpeliculas = new LinkedList<>();
+        
+        for(int i =0; i<_valoraciones.size(); i++){
+            IDpeliculas.add( Integer.valueOf( _valoraciones.get(i).getPelicula().getId() ));
+        }
+        
+        return IDpeliculas;
+    }
+    
 }
