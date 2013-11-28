@@ -83,4 +83,13 @@ public class ItemAverageAdjustment implements AlgoritmoRecomendacion {
        return num/den + mediaPelicula();
         
     }
+
+    @Override
+    public void setParametros(MedidaSimilitud medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+        this.medida = medida;
+        this.vecinos = vecinos;
+        this.pelicula = pelicula;
+        this.usuario = usuario;
+    }
+    
 }
