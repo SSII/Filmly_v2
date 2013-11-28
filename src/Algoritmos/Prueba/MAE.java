@@ -33,6 +33,8 @@ public class MAE {
         List<Pelicula> peliculasTest = new LinkedList<>();
         List<Pelicula> peliculasVecino = new LinkedList<>();
         List<Pelicula> peliculasComunes = new LinkedList<>();
+        float errorAcumulado = 0;
+        int prediccionesTotales = 0;
 
 
         //I veces validación cruzada
@@ -57,21 +59,17 @@ public class MAE {
                     peliculasComunes = getPeliculasComunes(peliculasTest, peliculasVecino);
                     
                     
-                }
-                
-                
-                
-                
+                    for(int l=0; l<peliculasComunes.size(); l++){
+                        algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
+                        errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-algoritmo.prediccion());           
+                        prediccionesTotales++;
+                    }                    
+                }         
                 vecinos.clear();
             }
-            
-            
-            
-            
             particiones.cambiarParticionTest();
         }
-        return 0;
-    
+        return errorAcumulado/prediccionesTotales;    
     }
     
     private List<Pelicula> getPeliculasComunes(List<Pelicula> peliculasTest,List<Pelicula> peliculasVecino){
