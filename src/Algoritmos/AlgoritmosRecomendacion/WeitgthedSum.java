@@ -83,5 +83,22 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
             return media + num/den;
         }
     }
+        
+    @Override
+     public void setParametros(MedidaSimilitud medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+        this.medida = medida;
+        for (Valoracion v:pelicula.getValoraciones()){
+            for (Usuario u:vecinos){
+                Valoracion vUsuario = u.getValoracion(pelicula);
+                if (vUsuario != null){
+                    valoracionesVecinos.add(v);
+                }   
+            }
+        }
+        this.pelicula = pelicula;
+        this.usuario = usuario;
+   }
+    
+    
     
 }

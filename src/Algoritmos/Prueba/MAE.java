@@ -30,7 +30,12 @@ public class MAE {
    
     public float precision(){
         List<Usuario> vecinos = new LinkedList<>();
-        List<Pelicula> peliculas = new LinkedList<>();
+        List<Pelicula> peliculasTest = new LinkedList<>();
+        List<Pelicula> peliculasVecino = new LinkedList<>();
+        List<Pelicula> peliculasComunes = new LinkedList<>();
+        float errorAcumulado = 0;
+        int prediccionesTotales = 0;
+
 
         //I veces validación cruzada
         for(int i=0; i<particiones.nParticiones; i++){
@@ -40,21 +45,44 @@ public class MAE {
             
             
             //Recorrido de la particion test
-            for(int j=0; j<pTest.getContenido().size();j++){                
+            for(int j=0; j<pTest.getContenido().size();j++){    
+                Usuario actualTest = pTest.getContenido().get(j);
                 
-                knn.setEjemplo( pTest.getContenido().get(j) );
-                vecinos = knn.evaluar();    
-                
-                
+                knn.setEjemplo( actualTest );
+                vecinos = knn.evaluar(); 
+                peliculasTest = actualTest.getPeliculasValoradas();
+             
+                //Recorriddo de vecindario
+                for(int k=0; k<vecinos.size(); k++){
+                    
+                    peliculasVecino = vecinos.get(k).getPeliculasValoradas();
+                    peliculasComunes = getPeliculasComunes(peliculasTest, peliculasVecino);
+                    
+                    
+                    for(int l=0; l<peliculasComunes.size(); l++){
+                        algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
+                        errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-algoritmo.prediccion());           
+                        prediccionesTotales++;
+                    }                    
+                }         
                 vecinos.clear();
             }
-            
-            
-            
-            
             particiones.cambiarParticionTest();
         }
-        return 0;
+        return errorAcumulado/prediccionesTotales;    
+    }
     
+    private List<Pelicula> getPeliculasComunes(List<Pelicula> peliculasTest,List<Pelicula> peliculasVecino){
+        List<Pelicula> resultado = new LinkedList<>();
+        
+        for (Pelicula i : peliculasTest) {
+            if( peliculasVecino.contains(i) ){
+                resultado.add(i);
+            }
+        }
+        
+        return resultado;
+        
+        
     }
 }
