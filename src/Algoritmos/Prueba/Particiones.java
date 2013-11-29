@@ -52,9 +52,7 @@ public class Particiones {
             }
             
         }
-    }
-    
-    
+    }   
     
     public Particion getParticionTest(){
         
@@ -78,5 +76,9 @@ public class Particiones {
         
         return entrenamiento;
     }
-    
+
+    public List<Particion> getParticiones() {
+        return particiones;
+    }
+     
 }

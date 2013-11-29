@@ -34,21 +34,24 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         this.algoritmo = algoritmo;
         this.valoracionesVecinos = new LinkedList();
         
-        for (Valoracion v:pelicula.getValoraciones()){
-            for (Usuario u:vecinos){
-                Valoracion vUsuario = u.getValoracion(pelicula);
-                if (vUsuario != null){
-                    valoracionesVecinos.add(v);
-                }   
+        if( pelicula != null ){
+            for (Valoracion v:pelicula.getValoraciones()){
+                for (Usuario u:vecinos){
+                    Valoracion vUsuario = u.getValoracion(pelicula);
+                    if (vUsuario != null){
+                        valoracionesVecinos.add(v);
+                    }   
+                }
             }
         }
         
-        if (n != -1){
-            this.n = n;
-        }else{
-            this.n = this.usuario.getValoraciones().size();
+        if(usuario != null ){
+            if (n != -1){
+                this.n = n;
+            }else{
+                this.n = this.usuario.getValoraciones().size();
+            }
         }
-               
     }
     
     @Override
@@ -105,8 +108,10 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
     }
         
     @Override
-     public void setParametros(MedidaSimilitud medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
-        this.medida = medida;
+     public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+        this.algoritmo = algoritmo;
+        this.pelicula = pelicula;
+        
         for (Valoracion v:pelicula.getValoraciones()){
             for (Usuario u:vecinos){
                 Valoracion vUsuario = u.getValoracion(pelicula);
@@ -115,7 +120,6 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
                 }   
             }
         }
-        this.pelicula = pelicula;
         this.usuario = usuario;
    }
     
