@@ -24,9 +24,10 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     Pelicula pelicula; // Película actual
     boolean ws; // Tipo de algoritmo; true WS, false WA
     List<Valoracion> valoracionesVecinos; // Lista de valoraciones comunes;
+    int n; // Tipo de algoritmo; -1 algoritmo general o n mayor que 0, n-dados
     
 
-    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos) {
+    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos, int n) {
         this.ws = ws;
         this.usuario = usuario;
         this.pelicula = pelicula;
@@ -41,6 +42,12 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
                 }   
             }
         }
+        
+        if (n != -1){
+            this.n = n;
+        }else{
+            this.n = this.usuario.getValoraciones().size();
+        }
                
     }
     
@@ -53,7 +60,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
             media += v.getPuntuacion();
         }  
         
-        return media/usuario.getValoraciones().size();
+        return media/n;
         
     }
     
@@ -84,14 +91,14 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
             return num/den;
         }else{
             float media = mediaUsuario();
-            for (Valoracion v:valoracionesVecinos){
+            for (int i=0; i<n; ++i){
                 if (algoritmo == 0){
-                    medida = new Coseno(usuario, v.getUsuario());
+                    medida = new Coseno(usuario, valoracionesVecinos.get(i).getUsuario());
                 }else{
-                    medida = new Pearson(usuario, v.getUsuario());
+                    medida = new Pearson(usuario, valoracionesVecinos.get(i).getUsuario());
                 }
                 den += medida.similitud();
-                num += (v.getPuntuacion() - mediaUsuario()) * medida.similitud();
+                num += (valoracionesVecinos.get(i).getPuntuacion() - mediaUsuario()) * medida.similitud();
             } 
             return media + num/den;
         }
