@@ -57,7 +57,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
         float media = 0;
         
         for(Valoracion v:usuario.getValoraciones()){
-            media += v.getPuntuacion();
+            media += (float)v.getPuntuacion();
         }  
         
         return media/n;
@@ -85,7 +85,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
                     medida = new Pearson(usuario, v.getUsuario());
                 }
                 den += medida.similitud();
-                num += v.getPuntuacion() * medida.similitud();
+                num += (float)v.getPuntuacion() * medida.similitud();
             }
             
             return num/den;
@@ -98,7 +98,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
                     medida = new Pearson(usuario, valoracionesVecinos.get(i).getUsuario());
                 }
                 den += medida.similitud();
-                num += (valoracionesVecinos.get(i).getPuntuacion() - mediaUsuario()) * medida.similitud();
+                num += ((float)valoracionesVecinos.get(i).getPuntuacion() - mediaUsuario()) * medida.similitud();
             } 
             return media + num/den;
         }
