@@ -76,9 +76,13 @@ public class MainPruebas {
         vecinos.add(u0);
         vecinos.add(u1);
         
-        Coseno p = new Coseno(u2,u1);
+        AlgoritmoRecomendacion a = new WeigthedSum(false, u2, p3, 0, vecinos, -1);
+        Coseno sim0 = new Coseno(u0, u2);
+        Coseno sim1 = new Coseno(u1, u2);
         //AlgoritmoRecomendacion a = new WeitgthedSum(false, u2, p3, 1, vecinos, -1);
-        System.out.println(p.similitud());
+        
+        System.out.println(sim0.similitud() + " " + sim1.similitud());
+        System.out.println(a.prediccion());
 
     // a.cargarDatos();
 

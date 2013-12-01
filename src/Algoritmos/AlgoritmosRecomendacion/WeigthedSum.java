@@ -118,10 +118,8 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
                     medida = new Pearson(usuario, valoracionesVecinosAux.get(i));
                 }
                 den += medida.similitud();
-                System.out.println(medida.similitud() +  "*" + valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() + "-" + mediaUsuario(valoracionesVecinosAux.get(i)));
                 num += ((float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() - mediaUsuario(valoracionesVecinosAux.get(i))) * medida.similitud();
             }
-            System.out.println(media + " " + num + " " + den);
             return media + num/den;
         }
     }
