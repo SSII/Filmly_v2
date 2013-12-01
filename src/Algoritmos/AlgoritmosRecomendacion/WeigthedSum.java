@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author grupo 12
  */
-public class WeitgthedSum implements AlgoritmoRecomendacion {
+public class WeigthedSum implements AlgoritmoRecomendacion {
     
     int algoritmo;
     MedidaSimilitud medida; // medida de similitud (Coseno = 0 o Pearson = 1)
@@ -29,7 +29,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     int n; // Tipo de algoritmo; -1 algoritmo general o n mayor que 0, n-dados
     
 
-    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos, int n) {
+    public WeigthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos, int n) {
         this.ws = ws;
         this.usuario = usuario;
         this.pelicula = pelicula;

@@ -39,11 +39,15 @@ public class Pearson implements MedidaSimilitud {
         
         float media = 0;
         
-        for (Valoracion v:u.getValoraciones()){
-            media += v.getPuntuacion();
-        }
+        for (Pair<Valoracion, Valoracion> p:valoraciones.values()){
+            if (p.getFirst().getUsuario().equals(u)){
+                media += p.getFirst().getPuntuacion();
+            }else{
+                media += p.getSecond().getPuntuacion();
+            }
+         }
         
-        return media/u.getValoraciones().size();
+        return media/valoraciones.size();
     }
     
     
