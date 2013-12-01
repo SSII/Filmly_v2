@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package Algoritmos.AlgoritmosRecomendacion;
-import Algoritmos.MedidasSimilitud.MedidaSimilitud;
 import Algoritmos.Modelo.*;
 import java.util.List;
 

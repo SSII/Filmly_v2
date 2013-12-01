@@ -36,18 +36,22 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         this.algoritmo = algoritmo;
         this.valoracionesVecinos = new HashMap();
         
-       for (Usuario u:vecinos){
-            Valoracion vUsuario = u.getValoracion(pelicula);
-            if (vUsuario != null){
-                valoracionesVecinos.put(u, vUsuario);
-            }   
+        if(vecinos != null){
+            for (Usuario u:vecinos){
+                 Valoracion vUsuario = u.getValoracion(pelicula);
+                 if (vUsuario != null){
+                     valoracionesVecinos.put(u, vUsuario);
+                 }   
+             }
         }
         
 
         if (n != -1){
             this.n = n;
         }else{
-            this.n = this.usuario.getValoraciones().size();
+            if(usuario != null){
+                this.n = this.usuario.getValoraciones().size();
+            }
         }
                
     }
@@ -109,18 +113,18 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
     }
         
     @Override
-     public void setParametros(int medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
-        /*this.medida = medida;
-        for (Valoracion v:pelicula.getValoraciones()){
-            for (Usuario u:vecinos){
-                Valoracion vUsuario = u.getValoracion(pelicula);
-                if (vUsuario != null){
-                    //valoracionesVecinos.add(v);
-                }   
-            }
+     public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+        this.algoritmo = algoritmo;
+      
+        for (Usuario u:vecinos){
+            Valoracion vUsuario = u.getValoracion(pelicula);
+            if (vUsuario != null){
+                valoracionesVecinos.put(u,vUsuario);
+            }   
         }
+        
         this.pelicula = pelicula;
-        this.usuario = usuario;*/
+        this.usuario = usuario;
    }
     
     
