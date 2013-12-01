@@ -8,7 +8,7 @@ package Algoritmos.Prueba;
 
 import Algoritmos.AlgoritmosRecomendacion.AlgoritmoRecomendacion;
 import Algoritmos.AlgoritmosRecomendacion.WeitgthedSum;
-import Algoritmos.MedidasSimilitud.Pearson;
+import Algoritmos.MedidasSimilitud.*;
 import Algoritmos.Modelo.Pelicula;
 import Algoritmos.Modelo.Usuario;
 import Algoritmos.Modelo.Valoracion;
@@ -57,28 +57,28 @@ public class MainPruebas {
         Valoracion v3 = new Valoracion (1);
         v3.setUsuario(u0);
         v3.setPelicula(p2);
-        Valoracion v4 = new Valoracion (1);
+        Valoracion v4 = new Valoracion (3);
         v4.setUsuario(u1);
         v4.setPelicula(p2);
-        Valoracion v5 = new Valoracion (2);
+        Valoracion v5 = new Valoracion (4);
         v5.setUsuario(u0);
         v5.setPelicula(p3);
-        Valoracion v6 = new Valoracion (1);
+        Valoracion v6 = new Valoracion (2);
         v6.setUsuario(u1);
         v6.setPelicula(p3);
-        Valoracion v7 = new Valoracion (4);
+        Valoracion v7 = new Valoracion (1);
         v7.setUsuario(u2);
         v7.setPelicula(p1);
-        Valoracion v8 = new Valoracion (2);
+        Valoracion v8 = new Valoracion (1);
         v8.setUsuario(u2);
         v8.setPelicula(p2);
         List<Usuario> vecinos = new LinkedList();
         vecinos.add(u0);
         vecinos.add(u1);
         
-        //Pearson p = new Pearson(u0,u1);
-        AlgoritmoRecomendacion a = new WeitgthedSum(false, u2, p3, 1, vecinos, -1);
-        System.out.println(a.prediccion());
+        Pearson p = new Pearson(u2,u1);
+        //AlgoritmoRecomendacion a = new WeitgthedSum(false, u2, p3, 1, vecinos, -1);
+        System.out.println(p.similitud());
 
     // a.cargarDatos();
 

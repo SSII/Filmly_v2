@@ -10,8 +10,10 @@ import Algoritmos.MedidasSimilitud.*;
 import Algoritmos.MedidasSimilitud.MedidaSimilitud;
 import Algoritmos.Modelo.Usuario;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -53,8 +55,9 @@ public class KNN {
         float sim = 1;
         Usuario menor = null;
         
+        
         for(Usuario u:_vecinos.keySet()){
-            if (_vecinos.get(u) < sim){
+            if (_vecinos.get(u) <= sim){
                 menor = u;
                 sim = _vecinos.get(u);
             }
@@ -81,7 +84,11 @@ public class KNN {
             }
         }
         
-        return (List<Usuario>)_vecinos.keySet();
+        List<Usuario> listaUsuarios = new LinkedList<>();
+        
+        listaUsuarios.addAll(_vecinos.keySet());
+       
+        return listaUsuarios;
     }
     
 }

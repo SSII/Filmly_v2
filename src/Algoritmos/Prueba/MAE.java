@@ -18,11 +18,11 @@ import java.util.List;
  */
 public class MAE {
     AlgoritmoRecomendacion algoritmo;
-    MedidaSimilitud medida;
+    int medida;
     Particiones particiones;
     
     
-    public MAE(AlgoritmoRecomendacion alg, Particiones part, MedidaSimilitud aMedida){
+    public MAE(AlgoritmoRecomendacion alg, Particiones part, int aMedida){
         algoritmo = alg;
         particiones = part;
         medida = aMedida;
@@ -41,8 +41,7 @@ public class MAE {
         for(int i=0; i<particiones.nParticiones; i++){
             
             Particion pTest = particiones.getParticionTest();
-            KNN knn = new KNN( particiones.getUsuariosEntrenamiento(), 5, medida );
-            
+            KNN knn = new KNN( particiones.getUsuariosEntrenamiento(),null, 5, medida);
             
             //Recorrido de la particion test
             for(int j=0; j<pTest.getContenido().size();j++){    
@@ -52,7 +51,7 @@ public class MAE {
                 vecinos = knn.evaluar(); 
                 peliculasTest = actualTest.getPeliculasValoradas();
              
-                //Recorriddo de vecindario
+                //Recorrido de vecindario
                 for(int k=0; k<vecinos.size(); k++){
                     
                     peliculasVecino = vecinos.get(k).getPeliculasValoradas();
@@ -81,8 +80,6 @@ public class MAE {
             }
         }
         
-        return resultado;
-        
-        
+        return resultado;    
     }
 }
