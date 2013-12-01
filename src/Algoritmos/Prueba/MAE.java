@@ -45,6 +45,7 @@ public class MAE {
             
             //Recorrido de la particion test
             for(int j=0; j<pTest.getContenido().size();j++){    
+                System.out.println("NUEVO USUARIO TEST");
                 Usuario actualTest = pTest.getContenido().get(j);
                 
                 knn.setEjemplo( actualTest );
@@ -55,10 +56,15 @@ public class MAE {
                 for(int k=0; k<vecinos.size(); k++){
                     
                     peliculasVecino = vecinos.get(k).getPeliculasValoradas();
+                    System.out.println("GET PELICULAS VECINO " + k);
                     peliculasComunes = getPeliculasComunes(peliculasTest, peliculasVecino);
+                    System.out.println("GET PELICULAS COMUNES " + k);
+                    
+                    System.out.println("TAM PELICULAS COMUNES " + peliculasComunes.size());
                     
                     
                     for(int l=0; l<peliculasComunes.size(); l++){
+                        System.out.println("L VALE: " + l);
                         algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
                         errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-algoritmo.prediccion());           
                         prediccionesTotales++;

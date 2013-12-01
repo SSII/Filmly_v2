@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author grupo 12
  */
-public class WeitgthedSum implements AlgoritmoRecomendacion {
+public class WeigthedSum implements AlgoritmoRecomendacion {
     
     int algoritmo;
     MedidaSimilitud medida; // medida de similitud (Coseno = 0 o Pearson = 1)
@@ -29,25 +29,29 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     int n; // Tipo de algoritmo; -1 algoritmo general o n mayor que 0, n-dados
     
 
-    public WeitgthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos, int n) {
+    public WeigthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos, int n) {
         this.ws = ws;
         this.usuario = usuario;
         this.pelicula = pelicula;
         this.algoritmo = algoritmo;
         this.valoracionesVecinos = new HashMap();
         
-       for (Usuario u:vecinos){
-            Valoracion vUsuario = u.getValoracion(pelicula);
-            if (vUsuario != null){
-                valoracionesVecinos.put(u, vUsuario);
-            }   
+        if(vecinos != null){
+            for (Usuario u:vecinos){
+                 Valoracion vUsuario = u.getValoracion(pelicula);
+                 if (vUsuario != null){
+                     valoracionesVecinos.put(u, vUsuario);
+                 }   
+             }
         }
         
 
         if (n != -1){
             this.n = n;
         }else{
-            this.n = this.usuario.getValoraciones().size();
+            if(usuario != null){
+                this.n = this.usuario.getValoraciones().size();
+            }
         }
                
     }
@@ -109,18 +113,18 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     }
         
     @Override
-     public void setParametros(int medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
-        /*this.medida = medida;
-        for (Valoracion v:pelicula.getValoraciones()){
-            for (Usuario u:vecinos){
-                Valoracion vUsuario = u.getValoracion(pelicula);
-                if (vUsuario != null){
-                    //valoracionesVecinos.add(v);
-                }   
-            }
+     public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+        this.algoritmo = algoritmo;
+      
+        for (Usuario u:vecinos){
+            Valoracion vUsuario = u.getValoracion(pelicula);
+            if (vUsuario != null){
+                valoracionesVecinos.put(u,vUsuario);
+            }   
         }
+        
         this.pelicula = pelicula;
-        this.usuario = usuario;*/
+        this.usuario = usuario;
    }
     
     
