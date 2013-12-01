@@ -111,15 +111,17 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
             return num/den;
         }else{
             float media = mediaUsuario();
-            for (int i=0; i<n; ++i){
+            for (int i=0; i<valoracionesVecinosAux.size(); ++i){
                 if (algoritmo == 0){
                     medida = new Coseno(usuario, valoracionesVecinosAux.get(i));
                 }else{
                     medida = new Pearson(usuario, valoracionesVecinosAux.get(i));
                 }
                 den += medida.similitud();
+                System.out.println(medida.similitud() +  "*" + valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() + "-" + mediaUsuario(valoracionesVecinosAux.get(i)));
                 num += ((float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() - mediaUsuario(valoracionesVecinosAux.get(i))) * medida.similitud();
-            } 
+            }
+            System.out.println(media + " " + num + " " + den);
             return media + num/den;
         }
     }
