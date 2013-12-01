@@ -69,6 +69,19 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         
     }
     
+    public float mediaUsuario (Usuario u){
+        int cont = 0;
+        float media = 0;
+        
+        for(Valoracion v:u.getValoraciones()){
+            if (usuario.getValoracion(v.getPelicula()) != null){
+                media += (float)v.getPuntuacion();
+                cont++;
+            }
+        }        
+        return media/cont;
+    }
+    
     @Override
     public float mediaPelicula(){
         
@@ -85,7 +98,7 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         List<Usuario> valoracionesVecinosAux = new LinkedList<>(valoracionesVecinos.keySet());
             
         if (ws){
-            for (int i=0; i<n; ++i){
+            for (int i=0; i<valoracionesVecinosAux.size(); ++i){
                 if (algoritmo == 0){
                     medida = new Coseno(usuario, valoracionesVecinosAux.get(i));
                 }else{
@@ -104,9 +117,8 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
                 }else{
                     medida = new Pearson(usuario, valoracionesVecinosAux.get(i));
                 }
-                System.out.println(valoracionesVecinosAux.get(i).getId() + " " + medida.similitud());
                 den += medida.similitud();
-                num += ((float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() - mediaUsuario()) * medida.similitud();
+                num += ((float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() - mediaUsuario(valoracionesVecinosAux.get(i))) * medida.similitud();
             } 
             return media + num/den;
         }
