@@ -36,14 +36,13 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
         this.algoritmo = algoritmo;
         this.valoracionesVecinos = new HashMap();
         
-        for (Valoracion v:pelicula.getValoraciones()){
-            for (Usuario u:vecinos){
-                Valoracion vUsuario = u.getValoracion(pelicula);
-                if (vUsuario != null){
-                    valoracionesVecinos.put(u, vUsuario);
-                }   
-            }
+       for (Usuario u:vecinos){
+            Valoracion vUsuario = u.getValoracion(pelicula);
+            if (vUsuario != null){
+                valoracionesVecinos.put(u, vUsuario);
+            }   
         }
+        
 
         if (n != -1){
             this.n = n;
@@ -110,8 +109,8 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
     }
         
     @Override
-     public void setParametros(MedidaSimilitud medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
-        this.medida = medida;
+     public void setParametros(int medida, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+        /*this.medida = medida;
         for (Valoracion v:pelicula.getValoraciones()){
             for (Usuario u:vecinos){
                 Valoracion vUsuario = u.getValoracion(pelicula);
@@ -121,7 +120,7 @@ public class WeitgthedSum implements AlgoritmoRecomendacion {
             }
         }
         this.pelicula = pelicula;
-        this.usuario = usuario;
+        this.usuario = usuario;*/
    }
     
     
