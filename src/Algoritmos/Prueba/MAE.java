@@ -35,6 +35,7 @@ public class MAE {
         List<Pelicula> peliculasComunes = new LinkedList<>();
         float errorAcumulado = 0;
         int prediccionesTotales = 0;
+        float prediccion = 0;
 
 
         //I veces validación cruzada
@@ -45,31 +46,26 @@ public class MAE {
             
             //Recorrido de la particion test
             for(int j=0; j<pTest.getContenido().size();j++){    
-                System.out.println("NUEVO USUARIO TEST");
+                System.out.println("NUEVO USUARIO TEST " + j);
                 Usuario actualTest = pTest.getContenido().get(j);
                 
                 knn.setEjemplo( actualTest );
                 vecinos = knn.evaluar(); 
+                
                 peliculasTest = actualTest.getPeliculasValoradas();
-             
-                //Recorrido de vecindario
-                for(int k=0; k<vecinos.size(); k++){
-                    
-                    peliculasVecino = vecinos.get(k).getPeliculasValoradas();
-                    System.out.println("GET PELICULAS VECINO " + k);
-                    peliculasComunes = getPeliculasComunes(peliculasTest, peliculasVecino);
-                    System.out.println("GET PELICULAS COMUNES " + k);
-                    
-                    System.out.println("TAM PELICULAS COMUNES " + peliculasComunes.size());
-                    
-                    
-                    for(int l=0; l<peliculasComunes.size(); l++){
-                        System.out.println("L VALE: " + l);
-                        algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
-                        errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-algoritmo.prediccion());           
-                        prediccionesTotales++;
-                    }                    
-                }         
+                peliculasComunes = getPeliculasComunes(actualTest, vecinos);
+                               
+                System.out.println("---------------------------------------------------------------------");
+               
+                //Recorrido de peliculas comunes
+                for(int l=0; l<peliculasComunes.size(); l++){
+                    algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
+                    prediccion = algoritmo.prediccion();
+                    errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-prediccion);     
+                    //System.out.println("PREDICCION: " + prediccion);
+                    prediccionesTotales++;
+                }                    
+                   
                 vecinos.clear();
             }
             particiones.cambiarParticionTest();
@@ -77,12 +73,17 @@ public class MAE {
         return errorAcumulado/prediccionesTotales;    
     }
     
-    private List<Pelicula> getPeliculasComunes(List<Pelicula> peliculasTest,List<Pelicula> peliculasVecino){
+    private List<Pelicula> getPeliculasComunes(Usuario test,List<Usuario> vecinos){
         List<Pelicula> resultado = new LinkedList<>();
+      
         
-        for (Pelicula i : peliculasTest) {
-            if( peliculasVecino.contains(i) ){
-                resultado.add(i);
+        for (Pelicula i : test.getPeliculasValoradas()) {
+            for (Usuario u : vecinos) {
+                for(Pelicula p : u.getPeliculasValoradas()){
+                    if( i.equals(p) ){
+                        resultado.add(p);
+                    }
+                }                
             }
         }
         

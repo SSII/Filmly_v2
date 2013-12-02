@@ -49,7 +49,11 @@ public class Coseno implements MedidaSimilitud {
             }   
         }
          
-        return num / (float)(Math.sqrt(factor1) * Math.sqrt(factor2));
+        if( valoraciones.isEmpty() ){
+            return 0;
+        } else {
+            return num / (float)(Math.sqrt(factor1) * Math.sqrt(factor2));
+        }
 
     }
     

@@ -103,7 +103,6 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
                 den += medida.similitud();
                 num += (float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() * medida.similitud();
             }
-            
             return num/den;
         }else{
             float media = mediaUsuario();
@@ -123,6 +122,7 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
     @Override
      public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
         this.algoritmo = algoritmo;
+        valoracionesVecinos.clear();
       
         for (Usuario u:vecinos){
             Valoracion vUsuario = u.getValoracion(pelicula);
@@ -133,8 +133,5 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         
         this.pelicula = pelicula;
         this.usuario = usuario;
-   }
-    
-    
-    
+   }   
 }
