@@ -70,16 +70,12 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
     }
     
     public float mediaUsuario (Usuario u){
-        int cont = 0;
         float media = 0;
         
         for(Valoracion v:u.getValoraciones()){
-            if (usuario.getValoracion(v.getPelicula()) != null){
-                media += (float)v.getPuntuacion();
-                cont++;
-            }
+            media += (float)v.getPuntuacion();
         }        
-        return media/cont;
+        return media/u.getValoraciones().size();
     }
     
     @Override
