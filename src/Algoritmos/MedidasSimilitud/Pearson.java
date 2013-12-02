@@ -75,7 +75,7 @@ public class Pearson implements MedidaSimilitud {
 
        
         //Medida de similitud transformada
-        
+        //
         if( factor2 == 0 || factor1 == 0 ){
             return 0;
         } else {

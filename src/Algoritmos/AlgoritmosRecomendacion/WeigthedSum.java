@@ -121,7 +121,12 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
                 den += medida.similitud();
                 num += ((float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() - mediaUsuario(valoracionesVecinosAux.get(i))) * medida.similitud();
             }
-            return media + num/den;
+            
+            if(den == 0){
+                return 0;
+            } else {
+                return media + num/den;
+            }
         }
     }
         

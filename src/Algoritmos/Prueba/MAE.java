@@ -54,19 +54,18 @@ public class MAE {
                 
                 peliculasTest = actualTest.getPeliculasValoradas();
                 peliculasComunes = getPeliculasComunes(actualTest, vecinos);
-                               
-                System.out.println("---------------------------------------------------------------------");
-               
+                                              
                 //Recorrido de peliculas comunes
                 for(int l=0; l<peliculasComunes.size(); l++){
                     algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
                     prediccion = algoritmo.prediccion();
+                    System.out.println("NOTA USUARIO: " + actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion() + " - NOTA PREDICHA: " + prediccion);
                     errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-prediccion);     
-                    System.out.println("PREDICCION: " + prediccion);
                     prediccionesTotales++;
                 }                    
                    
                 vecinos.clear();
+                //System.out.println("ERROR MEDIO: " + errorAcumulado/prediccionesTotales);
             }
             particiones.cambiarParticionTest();
         }
