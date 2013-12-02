@@ -73,11 +73,14 @@ public class Pearson implements MedidaSimilitud {
             }   
         }
 
-        if(factor2==0){
-            System.out.println("VALORACIONES " + valoraciones.size());
-        }
+       
         //Medida de similitud transformada
-        return (num / (float)Math.sqrt(factor1 * factor2) + 1 ) / 2;
+        
+        if( factor2 == 0 || factor1 == 0 ){
+            return 0;
+        } else {
+            return (num / (float)Math.sqrt(factor1 * factor2) + 1 ) / 2;
+        }
     }
     
 }

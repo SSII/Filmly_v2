@@ -62,7 +62,7 @@ public class MAE {
                     algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
                     prediccion = algoritmo.prediccion();
                     errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-prediccion);     
-                    //System.out.println("PREDICCION: " + prediccion);
+                    System.out.println("PREDICCION: " + prediccion);
                     prediccionesTotales++;
                 }                    
                    
