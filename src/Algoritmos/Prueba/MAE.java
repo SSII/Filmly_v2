@@ -40,18 +40,22 @@ public class MAE {
 
         //I veces validación cruzada
         for(int i=0; i<particiones.nParticiones; i++){
+            List<Usuario> usuariosEntrenamiento = new LinkedList();
+            usuariosEntrenamiento = particiones.getUsuariosEntrenamiento();
+            
+            System.out.println("-------------------------------------------------------------------------------");
             
             Particion pTest = particiones.getParticionTest();
-            KNN knn = new KNN( particiones.getUsuariosEntrenamiento(),null, 5, medida);
             
             //Recorrido de la particion test
             for(int j=0; j<pTest.getContenido().size();j++){    
-                System.out.println("NUEVO USUARIO TEST " + j);
+                
                 Usuario actualTest = pTest.getContenido().get(j);
+                //System.out.println("NUEVO USUARIO TEST " + actualTest.getId());
                 
-                knn.setEjemplo( actualTest );
+                KNN knn = new KNN( usuariosEntrenamiento,actualTest, 5, medida);
                 vecinos = knn.evaluar(); 
-                
+               
                 peliculasTest = actualTest.getPeliculasValoradas();
                 peliculasComunes = getPeliculasComunes(actualTest, vecinos);
                                               
@@ -59,13 +63,20 @@ public class MAE {
                 for(int l=0; l<peliculasComunes.size(); l++){
                     algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
                     prediccion = algoritmo.prediccion();
-                    System.out.println("NOTA USUARIO: " + actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion() + " - NOTA PREDICHA: " + prediccion);
-                    errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-prediccion);     
-                    prediccionesTotales++;
+                    
+                    if( prediccion != 0){                        
+                        if(prediccion > 5){
+                            prediccion = 5;
+                        }
+                        
+                        //System.out.println("NOTA USUARIO: " + actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion() + " - NOTA PREDICHA: " + prediccion);
+                        errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-prediccion);     
+                        prediccionesTotales++;
+                    }
                 }                    
                    
                 vecinos.clear();
-                //System.out.println("ERROR MEDIO: " + errorAcumulado/prediccionesTotales);
+                System.out.println("ERROR MEDIO: " + errorAcumulado/prediccionesTotales + " USUARIO: " + j);
             }
             particiones.cambiarParticionTest();
         }

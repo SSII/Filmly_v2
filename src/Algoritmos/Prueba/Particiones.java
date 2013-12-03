@@ -33,12 +33,13 @@ public class Particiones {
         for( int i=0; i<nParticiones; i++){
             particiones.add( new Particion() );
             for( int j=0; j<tamParticion; j++){
-                particiones.get(i).addContenido(usuarios.get(j));
+                particiones.get(i).addContenido(usuarios.get(k));
                 k++;                       
             }            
         }
         
         particiones.get(0).setTipoParticion(Particion.tipo.Test);
+        
     }
     
     public void cambiarParticionTest(){

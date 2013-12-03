@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -73,7 +72,7 @@ public class KNN {
             }else{
                 _algoritmoSimilitud = new Pearson (u, _ejemplo);
             }
-            float similitud = _algoritmoSimilitud.similitud();
+            float similitud = _algoritmoSimilitud.similitud();                   
             if (_vecinos.size() < _k){
                 _vecinos.put(u, similitud);
             }else{
@@ -87,7 +86,7 @@ public class KNN {
         List<Usuario> listaUsuarios = new LinkedList<>();
         
         listaUsuarios.addAll(_vecinos.keySet());
-       
+               
         return listaUsuarios;
     }
     

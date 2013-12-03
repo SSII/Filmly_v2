@@ -45,7 +45,6 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
              }
         }
         
-
         if (n != -1){
             this.n = n;
         }else{
@@ -75,6 +74,7 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         for(Valoracion v:u.getValoraciones()){
             media += (float)v.getPuntuacion();
         }        
+        
         return media/u.getValoraciones().size();
     }
     
@@ -94,16 +94,20 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         List<Usuario> valoracionesVecinosAux = new LinkedList<>(valoracionesVecinos.keySet());
             
         if (ws){
+           // System.out.println("EMPIEZA VECINO");
             for (int i=0; i<valoracionesVecinosAux.size(); ++i){
                 if (algoritmo == 0){
                     medida = new Coseno(usuario, valoracionesVecinosAux.get(i));
                 }else{
                     medida = new Pearson(usuario, valoracionesVecinosAux.get(i));
                 }
+              //  System.out.println("SIMILITUD " + medida.similitud());
+
                 den += medida.similitud();
                 num += (float)valoracionesVecinos.get(valoracionesVecinosAux.get(i)).getPuntuacion() * medida.similitud();
             }
-            
+          //  System.out.println("ACABA VECINO");
+          
             if(den == 0){
                 return 0;
             } else {
@@ -144,5 +148,7 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         
         this.pelicula = pelicula;
         this.usuario = usuario;
+        this.n = this.usuario.getValoraciones().size();
+
    }   
 }
