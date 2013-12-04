@@ -22,6 +22,6 @@ public interface AlgoritmoRecomendacion {
     public abstract float mediaPelicula();
     
     /** Modificacion de los parametros del algoritmo de recomendación */
-    public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario);
+    public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario, int n);
 
 }

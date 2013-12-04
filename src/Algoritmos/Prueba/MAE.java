@@ -29,27 +29,26 @@ public class MAE {
     }
    
     public float precision(){
-        List<Usuario> vecinos = new LinkedList<>();
+        List<Usuario> vecinos;
         List<Pelicula> peliculasTest = new LinkedList<>();
         List<Pelicula> peliculasVecino = new LinkedList<>();
-        List<Pelicula> peliculasComunes = new LinkedList<>();
+        List<Pelicula> peliculasComunes;
         float errorAcumulado = 0;
         int prediccionesTotales = 0;
-        float prediccion = 0;
+        float prediccion;
 
 
         //I veces validación cruzada
         for(int i=0; i<particiones.nParticiones; i++){
-            List<Usuario> usuariosEntrenamiento = new LinkedList();
+            List<Usuario> usuariosEntrenamiento;
             usuariosEntrenamiento = particiones.getUsuariosEntrenamiento();
             
             System.out.println("-------------------------------------------------------------------------------");
             
             Particion pTest = particiones.getParticionTest();
-            
+        
             //Recorrido de la particion test
-            for(int j=0; j<pTest.getContenido().size();j++){    
-                
+            for(int j=0; j<pTest.getContenido().size();j++){     
                 Usuario actualTest = pTest.getContenido().get(j);
                 //System.out.println("NUEVO USUARIO TEST " + actualTest.getId());
                 
@@ -61,24 +60,25 @@ public class MAE {
                                               
                 //Recorrido de peliculas comunes
                 for(int l=0; l<peliculasComunes.size(); l++){
-                    algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest);
+                    algoritmo.setParametros(medida, vecinos, peliculasComunes.get(l), actualTest,-1);
                     prediccion = algoritmo.prediccion();
                     
-                    if( prediccion != 0){                        
+                    if( prediccion != 0){ 
+                        
                         if(prediccion > 5){
                             prediccion = 5;
-                        }
-                        
+                        }                        
                         //System.out.println("NOTA USUARIO: " + actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion() + " - NOTA PREDICHA: " + prediccion);
                         errorAcumulado += Math.abs(actualTest.getValoracion(peliculasComunes.get(l)).getPuntuacion()-prediccion);     
                         prediccionesTotales++;
                     }
-                }                    
-                   
+                }       
                 vecinos.clear();
-                System.out.println("ERROR MEDIO: " + errorAcumulado/prediccionesTotales + " USUARIO: " + j);
             }
+            System.out.println("ERROR MEDIO: " + errorAcumulado/prediccionesTotales + " PARTICION: " + i);
             particiones.cambiarParticionTest();
+            prediccionesTotales=0;
+            errorAcumulado=0;
         }
         return errorAcumulado/prediccionesTotales;    
     }

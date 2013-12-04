@@ -39,7 +39,6 @@ public class Particiones {
         }
         
         particiones.get(0).setTipoParticion(Particion.tipo.Test);
-        
     }
     
     public void cambiarParticionTest(){

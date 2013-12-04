@@ -27,6 +27,7 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
     boolean ws; // Tipo de algoritmo; true WS, false WA
     Map<Usuario,Valoracion> valoracionesVecinos; // Mapa de valoraciones comunes;
     int n; // Tipo de algoritmo; -1 algoritmo general o n mayor que 0, n-dados
+    List<Valoracion> valoraciones;
     
 
     public WeigthedSum(boolean ws, Usuario usuario, Pelicula pelicula, int algoritmo, List<Usuario> vecinos, int n) {
@@ -60,7 +61,7 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         
         float media = 0;
         
-        for(Valoracion v:usuario.getValoraciones()){
+        for(Valoracion v: valoraciones){
             media += (float)v.getPuntuacion();
         }  
         
@@ -135,9 +136,12 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
     }
         
     @Override
-     public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario) {
+     public void setParametros(int algoritmo, List<Usuario> vecinos, Pelicula pelicula, Usuario usuario, int n) {
         this.algoritmo = algoritmo;
         valoracionesVecinos.clear();
+        valoraciones = new LinkedList(usuario.getValoraciones());
+        valoraciones.remove( usuario.getValoracion(pelicula) );
+
       
         for (Usuario u:vecinos){
             Valoracion vUsuario = u.getValoracion(pelicula);
@@ -148,7 +152,15 @@ public class WeigthedSum implements AlgoritmoRecomendacion {
         
         this.pelicula = pelicula;
         this.usuario = usuario;
-        this.n = this.usuario.getValoraciones().size();
-
+        
+        if (n != -1){
+            if(n > valoraciones.size()){
+                this.n = n;
+            } else {
+                this.n = valoraciones.size();
+            }
+        }else{
+            this.n = valoraciones.size();
+        }
    }   
 }
