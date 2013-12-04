@@ -72,9 +72,15 @@ public class KNN {
             }else{
                 _algoritmoSimilitud = new Pearson (u, _ejemplo);
             }
-            float similitud = _algoritmoSimilitud.similitud();                   
+            
+
+            float similitud = _algoritmoSimilitud.similitud();        
+            
+        
+           
+                
             if (_vecinos.size() < _k){
-                _vecinos.put(u, similitud);
+                _vecinos.put(u, similitud);   
             }else{
                 if (_vecinos.get(peorUsuario()) < similitud){
                     _vecinos.remove(peorUsuario());

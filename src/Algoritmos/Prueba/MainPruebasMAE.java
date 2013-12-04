@@ -24,7 +24,7 @@ public class MainPruebasMAE {
         GestorPersistencia.crearConexion();
         EntityManager em = GestorPersistencia.getInstancia().getEntityManager();
      
-        Query q = em.createNativeQuery("select * from usuarios limt 500", Usuario.class);
+        Query q = em.createNativeQuery("select * from usuarios", Usuario.class);
 
         List<Usuario> l = q.getResultList();
         List<Usuario> l2 = new LinkedList<>();
@@ -35,17 +35,15 @@ public class MainPruebasMAE {
 //        
         
        
-         WeigthedSum ws = new WeigthedSum(true, null, null, 1, null, -1);
+         WeigthedSum ws = new WeigthedSum(false, null, null, 1, null, -1);
          Particiones particiones = new Particiones(7);
          particiones.crearParticiones(l);
          
          
          MAE mae = new MAE(ws, particiones, 1);
          
-         long tiempoInicial = System.currentTimeMillis();
          System.out.println("MAE: " + mae.precision());
-         long tiempoTotal = System.currentTimeMillis() - tiempoInicial;
-         System.out.println("TIEMPO TOTAL " + tiempoTotal/1000 + " seg.");
+         
          
      }
 
